@@ -1,0 +1,3 @@
+location ^~ /_next {
+    proxy_pass http://next.test.local;
+}

@@ -1,0 +1,73 @@
+version: "3"
+services:
+  proxy:
+    image: jwilder/nginx-proxy:1.5.1
+    privileged: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - $PWD/docker/proxy/web.test.local:/etc/nginx/vhost.d/web.test.local
+    environment:
+      TZ: Asia/Tokyo
+
+  php:
+    build:
+      context: ./docker/laravel
+    platform: linux/amd64
+    volumes:
+      - $PWD/laravel:/var/www/html
+      - php_vendor:/var/www/html/vendor
+    environment:
+      TZ: Asia/Tokyo
+    depends_on:
+      - db
+      - proxy
+
+  web:
+    image: nginx:1.10.3
+    volumes:
+      - $PWD/docker/laravel/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - $PWD/laravel:/var/www/html
+    environment:
+      TZ: Asia/Tokyo
+      VIRTUAL_HOST: web.test.local
+    depends_on:
+      - php
+      - proxy
+
+  nextjs:
+    build: 
+      context: ./docker/nextjs
+    volumes:
+      - $PWD:/app
+      - node_modules:/app/nextjs/node_modules
+    environment:
+      TZ: Asia/Tokyo
+      VIRTUAL_HOST: next.test.local
+    working_dir: /app/nextjs
+    tty: true
+
+  db:
+    image: mysql:8.0.30
+    volumes:
+      - db-store:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    environment:
+      TZ: Asia/Tokyo
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: mysql
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+
+volumes:
+  db-store:
+  node_modules:
+    name: nextjs-laravel-auth-node_modules
+    driver: local
+  php_vendor:
+    name: nextjs-laravel-auth-php_vendor
+    driver: local
