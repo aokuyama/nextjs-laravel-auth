@@ -63,6 +63,14 @@ services:
       VIRTUAL_HOST: next.test.local
     working_dir: /app/nextjs
     tty: true
+    depends_on:
+      - proxy
+    command:  >
+      sh -c "
+      npm i &&
+      npm run dev -- -p 80 &&
+      tail -f /dev/null
+      "
 
   db:
     image: mysql:8.0.30
