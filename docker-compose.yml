@@ -21,9 +21,24 @@ services:
       - php_vendor:/var/www/html/vendor
     environment:
       TZ: Asia/Tokyo
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_DATABASE: homestead
+      DB_USERNAME: homestead
+      DB_PASSWORD: secret
+      APP_ENV: local
+      APP_DEBUG: true
+      APP_NAME: Laravel
+      APP_URL: http://localhost
     depends_on:
       - db
       - proxy
+    command: >
+      sh -c "
+      ./init.sh &&
+      php-fpm &&
+      tail -f /dev/null
+      "
 
   web:
     image: nginx:1.10.3
@@ -55,12 +70,11 @@ services:
       - db-store:/var/lib/mysql
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: homestead
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
       TZ: Asia/Tokyo
-      MYSQL_ROOT_PASSWORD: mysql
-      MYSQL_DATABASE: mysql
-      MYSQL_USER: mysql
-      MYSQL_PASSWORD: mysql
-
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
 
 volumes:
