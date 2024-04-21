@@ -1,3 +1,27 @@
 location ^~ /_next {
     proxy_pass http://next.test.local;
 }
+
+location ^~ /next_public {
+    proxy_pass http://next.test.local;
+}
+
+location ^~ /next {
+    proxy_pass http://next.test.local;
+}
+
+location ^~ /api/auth {
+    proxy_pass http://next.test.local;
+}
+
+location ^~ /login-next {
+    proxy_pass http://next.test.local;
+}
+
+location ^~ /dashboard {
+    proxy_pass http://next.test.local;
+}
+
+location ^~ /api/next {
+    proxy_pass http://next.test.local;
+}

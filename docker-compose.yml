@@ -61,6 +61,7 @@ services:
     environment:
       TZ: Asia/Tokyo
       VIRTUAL_HOST: next.test.local
+      AUTH_SECRET: some-secret
     working_dir: /app/nextjs
     tty: true
     depends_on:
