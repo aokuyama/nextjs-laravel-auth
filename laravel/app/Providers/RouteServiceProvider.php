@@ -39,7 +39,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapJwtRoutes();
     }
 
     /**
@@ -69,5 +69,12 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+    protected function mapJwtRoutes()
+    {
+        Route::prefix('api/jwt')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/jwt_api.php'));
     }
 }
