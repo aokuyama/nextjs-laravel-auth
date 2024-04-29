@@ -8,24 +8,24 @@ hostに以下のように設定
 ```
 
 ・Laravelのページ  
-http://web.test.local/
+https://web.test.local/
 
 
 ・Next.jsのページ  
-http://web.test.local/login-next
+https://web.test.local/login-next
 
 のように、パスによってLaravelのページとNext.jsのページを出し分けます。
 
 ルーティングの設定はこちら  
 https://github.com/aokuyama/nextjs-laravel/blob/main/docker/proxy/web.test.local
 
-http://web.test.local/login-next  
+https://web.test.local/login-next  
 からログインするとLaravelのセッションとAuth.jsのセッションが同時に作られ、
 ログイン状態でを維持したままLaravelとNextのページを行き来できます
 
 
 ログイン状態でのみアクセスできるLaravelのページ  
-http://web.test.local/home
+https://web.test.local/home
 
 ログイン状態でのみアクセスできるNextのページ  
-http://web.test.local/dashboard
+https://web.test.local/dashboard

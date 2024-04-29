@@ -9,8 +9,26 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - $PWD/docker/proxy/web.test.local:/etc/nginx/vhost.d/web.test.local
+      - proxy:/usr/share/nginx/html
+      - certs:/etc/nginx/certs:ro
     environment:
       TZ: Asia/Tokyo
+      DHPARAM_GENERATION: false
+    labels:
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: true
+
+  letsencrypt-nginx:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    privileged: true
+    environment:
+      - NGINX_PROXY_CONTAINER=proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - $PWD/docker/proxy/web.test.local:/etc/nginx/vhost.d/web.test.local
+      - proxy:/usr/share/nginx/html
+      - certs:/etc/nginx/certs:rw
+    depends_on:
+      - proxy
 
   php:
     build:
@@ -29,7 +47,7 @@ services:
       APP_ENV: local
       APP_DEBUG: true
       APP_NAME: Laravel
-      APP_URL: http://localhost
+      APP_URL: https://web.test.local
     depends_on:
       - db
       - proxy
@@ -48,6 +66,7 @@ services:
     environment:
       TZ: Asia/Tokyo
       VIRTUAL_HOST: web.test.local
+      CERT_NAME: default
     depends_on:
       - php
       - proxy
@@ -61,6 +80,7 @@ services:
     environment:
       TZ: Asia/Tokyo
       VIRTUAL_HOST: next.test.local
+      CERT_NAME: default
       AUTH_SECRET: some-secret
     working_dir: /app/nextjs
     tty: true
@@ -87,6 +107,8 @@ services:
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
 
 volumes:
+  proxy:
+  certs:
   db-store:
   node_modules:
     name: nextjs-laravel-auth-node_modules
