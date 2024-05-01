@@ -1,20 +1,9 @@
-import { getLaravelCookie } from "../cookie";
+import { setLaravelCookie } from "../cookie";
 
 export const logout = async () => {
-  const method = "GET";
-  const c = getLaravelCookie();
-
-  const headers = new Headers({
-    Cookie: `laravel_session=${c.laravel_session};`,
-    "Content-Type": "application/json",
+  setLaravelCookie({
+    laravel_session: undefined,
+    "XSRF-TOKEN": undefined
   });
-
-  const res = await fetch("http://web/api/logout", {
-    method,
-    headers,
-  });
-  if (res.ok) {
-    return true;
-  }
-  return false;
+  return true;
 };
