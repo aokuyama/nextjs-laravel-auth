@@ -1,5 +1,4 @@
-import { logout } from "@/shared/laravel/api/logout";
-import { redirect } from 'next/navigation'
+import { signOut } from "@/auth";
 
 export default function Page() {
   return (
@@ -9,8 +8,7 @@ export default function Page() {
         <form
           action={async () => {
             "use server";
-            await logout();
-            redirect('/login');
+            await signOut();
           }}
         >
           <button>ログアウト</button>

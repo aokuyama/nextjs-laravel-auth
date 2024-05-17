@@ -5,7 +5,7 @@ import type { NextAuthConfig } from "next-auth";
 export const authConfig: NextAuthConfig = {
   providers: [credentialsProvider],
   pages: {
-    signIn: "/login",
+    signIn: "/login-next",
   },
 
   callbacks: {
