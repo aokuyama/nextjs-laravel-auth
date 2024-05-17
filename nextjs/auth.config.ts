@@ -3,6 +3,7 @@ import { credentialsProvider } from "@/shared/nextauth/provider";
 import type { NextAuthConfig } from "next-auth";
 
 export const authConfig: NextAuthConfig = {
+  debug: true,
   providers: [credentialsProvider],
   pages: {
     signIn: "/login-next",
