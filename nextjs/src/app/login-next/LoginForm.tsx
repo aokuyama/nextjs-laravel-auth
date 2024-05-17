@@ -16,11 +16,7 @@ export default function LoginForm() {
         パスワード:
         <input type="password" name="password" />
       </label>
-      {!state && (
-        <div>
-          メールアドレスかパスワードが違います。
-        </div>
-      )}
+      {!state && <div>メールアドレスかパスワードが違います。</div>}
       <SubmitButton />
     </form>
   );

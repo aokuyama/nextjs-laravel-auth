@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { SessionProvider } from 'next-auth/react';
+import { SessionProvider } from "next-auth/react";
 
 export default async function RootLayout({
   children,
@@ -10,11 +10,9 @@ export default async function RootLayout({
 
   return (
     <SessionProvider session={session}>
-    <html lang="ja">
-      <body>
-        {children}
-      </body>
-    </html>
+      <html lang="ja">
+        <body>{children}</body>
+      </html>
     </SessionProvider>
   );
 }

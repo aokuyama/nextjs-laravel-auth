@@ -49,7 +49,7 @@ export const parseAndSetLaravelCookie = (headerCookieString: string | null) => {
 };
 
 const toSameSite = (
-  v: string | undefined | true | false
+  v: string | undefined | true | false,
 ): true | false | "lax" | "strict" | "none" | undefined => {
   if (v === "lax" || v === "strict" || v === "none") {
     return v;

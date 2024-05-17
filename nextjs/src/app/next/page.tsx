@@ -1,26 +1,24 @@
-'use client';
+"use client";
 
-import { useSession } from 'next-auth/react';
-import React, { useEffect } from 'react';
+import { useSession } from "next-auth/react";
+import React, { useEffect } from "react";
 
 export default function Page() {
   const session = useSession();
   console.table(session);
 
   useEffect(() => {
-    (async() => {
+    (async () => {
       const response = await fetch("/api/next/example");
       const data = await response.json();
       console.log(data);
-    })()
+    })();
   }, []);
 
-    return (
+  return (
     <>
       <h1>session</h1>
-      <div>
-        
-      </div>
+      <div></div>
     </>
   );
 }
