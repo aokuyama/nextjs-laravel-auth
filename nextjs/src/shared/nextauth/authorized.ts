@@ -9,7 +9,7 @@ export const authorized = async (
 ) => {
   const isLoggedIn = await checkLogged(auth);
 
-  const isOnLoginPage = request.nextUrl.pathname.startsWith("/login-next");
+  const isOnLoginPage = request.nextUrl.pathname.startsWith("/api/auth/signin");
 
   if (isLoggedIn && isOnLoginPage) {
     const url = new URL(

@@ -5,9 +5,6 @@ import type { NextAuthConfig } from "next-auth";
 export const authConfig: NextAuthConfig = {
   debug: true,
   providers: [credentialsProvider],
-  pages: {
-    signIn: "/login-next",
-  },
 
   callbacks: {
     authorized: async ({ auth, request }) => {

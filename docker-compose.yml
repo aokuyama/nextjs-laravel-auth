@@ -81,7 +81,7 @@ services:
       VIRTUAL_HOST: next.test.local
       CERT_NAME: default
       AUTH_SECRET: some-secret
-      AUTH_URL: https://web.test.local/login-next
+      AUTH_URL: https://web.test.local/api/auth
     working_dir: /app/nextjs
     tty: true
     depends_on:

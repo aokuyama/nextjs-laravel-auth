@@ -18,10 +18,6 @@ location ^~ /api/ {
     proxy_pass http://next.test.local;
 }
 
-location /login-next {
-    proxy_pass http://next.test.local;
-}
-
 location /dashboard {
     proxy_pass http://next.test.local;
 }
