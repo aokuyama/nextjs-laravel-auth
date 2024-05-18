@@ -1,4 +1,5 @@
 import { getLaravelCookie } from "../cookie";
+import { OuputSchema } from "./login";
 
 export const check = async () => {
   const method = "GET";
@@ -14,7 +15,8 @@ export const check = async () => {
     headers,
   });
   if (res.ok) {
-    return true;
+    const r =  OuputSchema.parse(await res.json());
+    return r.result;
   }
-  return false;
+  return null;
 };
