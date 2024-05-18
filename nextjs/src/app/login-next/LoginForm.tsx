@@ -13,15 +13,6 @@ export default function LoginForm() {
 
   return (
     <form action={formAction}>
-      <label>
-        メールアドレス:
-        <input type="email" name="email" />
-      </label>
-      <label>
-        パスワード:
-        <input type="password" name="password" />
-      </label>
-      {!state && <div>メールアドレスかパスワードが違います。</div>}
       <SubmitButton />
     </form>
   );
@@ -31,7 +22,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <button aria-disabled={pending}>
-      {pending ? "ログイン中" : "ログインする"}
+      {pending ? "ログイン中" : "続行するにはログインしてください"}
     </button>
   );
 }

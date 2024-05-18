@@ -25,13 +25,5 @@ export const authorized = async (
 };
 
 const checkLogged = async (auth: Session | null) => {
-  const isLoggedNextAuth = !!auth?.user;
-  if (isLoggedNextAuth) {
-    if (!(await check())) {
-      return false;
-    }
-    return true;
-  }
-  await logout();
-  return false;
+  return !!(await check());
 };
