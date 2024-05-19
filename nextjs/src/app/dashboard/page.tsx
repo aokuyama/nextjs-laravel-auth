@@ -1,4 +1,4 @@
-import { signOut } from "@/auth";
+import { logout } from "@/shared/logout";
 
 export default function Page() {
   return (
@@ -8,7 +8,7 @@ export default function Page() {
         <form
           action={async () => {
             "use server";
-            await signOut();
+            await logout();
           }}
         >
           <button>ログアウト</button>
