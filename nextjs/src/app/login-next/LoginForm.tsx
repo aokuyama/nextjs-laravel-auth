@@ -7,10 +7,6 @@ import { useFormState, useFormStatus } from "react-dom";
 export default function LoginForm() {
   const [state, formAction] = useFormState(authenticate, true);
 
-  if (!state) {
-    redirect("/login");
-  }
-
   return (
     <form action={formAction}>
       <SubmitButton />

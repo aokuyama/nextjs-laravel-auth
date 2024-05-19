@@ -24,7 +24,7 @@ export const check = async () => {
     headers,
   });
   if (res.ok) {
-    const r =  OuputSchema.parse(await res.json());
+    const r = OuputSchema.parse(await res.json());
     return r.result;
   }
   return null;

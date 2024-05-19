@@ -11,6 +11,6 @@ export const credentialsProvider = Credentials({
       id: user.id.toString(),
       email: user.email,
       token: user.token,
-    }
+    };
   },
 });
