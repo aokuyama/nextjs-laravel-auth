@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
+    private $redirectToPath;
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -21,19 +23,18 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
+        $this->redirectToPath = $request->post('callbackUrl', null);
         $this->middleware('guest')->except('logout');
+    }
+
+    public function redirectPath()
+    {
+        return $this->redirectToPath ?: '/home';
     }
 }
