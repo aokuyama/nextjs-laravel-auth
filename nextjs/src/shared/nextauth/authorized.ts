@@ -1,13 +1,11 @@
 import { Session } from "next-auth";
 import { NextRequest } from "next/server";
-import { check } from "../laravel/api/check";
-import { logout } from "../laravel/api/logout";
 
 export const authorized = async (
   auth: Session | null,
   request: NextRequest,
 ) => {
-  const isLoggedIn = await checkLogged(auth);
+  const isLoggedIn = !!auth?.user;
 
   const isOnLoginPage = request.nextUrl.pathname.startsWith("/login-next");
 
@@ -22,8 +20,4 @@ export const authorized = async (
     return Response.redirect(new URL("/", request.nextUrl));
   }
   return isLoggedIn;
-};
-
-const checkLogged = async (auth: Session | null) => {
-  return !!(await check());
 };

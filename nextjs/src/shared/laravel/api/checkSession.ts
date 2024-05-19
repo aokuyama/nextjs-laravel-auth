@@ -1,6 +1,7 @@
 import { getLaravelCookie } from "../cookie";
+import { OuputSchema } from "./check";
 
-export const logout = async () => {
+export const checkSession = async () => {
   const method = "GET";
   const c = getLaravelCookie();
 
@@ -9,12 +10,13 @@ export const logout = async () => {
     "Content-Type": "application/json",
   });
 
-  const res = await fetch("http://web/api/logout", {
+  const res = await fetch("http://web/api/users/me", {
     method,
     headers,
   });
   if (res.ok) {
-    return true;
+    const r = OuputSchema.parse(await res.json());
+    return r.result;
   }
-  return false;
+  return null;
 };

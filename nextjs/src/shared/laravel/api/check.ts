@@ -1,5 +1,14 @@
 import { getLaravelCookie } from "../cookie";
-import { OuputSchema } from "./login";
+import { z } from "zod";
+
+export const OuputSchema = z.object({
+  code: z.string(),
+  result: z.object({
+    id: z.number(),
+    email: z.string(),
+    token: z.string(),
+  }),
+});
 
 export const check = async () => {
   const method = "GET";

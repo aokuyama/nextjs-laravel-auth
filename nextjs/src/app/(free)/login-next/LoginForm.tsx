@@ -22,7 +22,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <button aria-disabled={pending}>
-      {pending ? "ログイン中" : "続行するにはログインしてください"}
+      {pending ? "ログイン中" : "ログインして処理を続行します"}
     </button>
   );
 }
