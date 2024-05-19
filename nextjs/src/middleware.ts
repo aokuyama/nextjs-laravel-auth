@@ -8,18 +8,18 @@ export default auth(async (request) => {
     url.searchParams.append("callbackUrl", request.nextUrl.pathname);
     return NextResponse.redirect(url);
   }
+  if (request.nextUrl.pathname.startsWith("/login-next")) {
+    return;
+  }
   if (!request.auth) {
     const url = new URL("/login-next", request.nextUrl);
     url.searchParams.append("callbackUrl", request.nextUrl.pathname);
-    if (!request.nextUrl.pathname.startsWith("/login-next")) {
-      return NextResponse.redirect(url);
-    }
+    return NextResponse.redirect(url);
   }
 });
 
 export const config = {
   // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
-  // ここと(free)のrouteの二重定義になってるのをなんとかしたい
   matcher: ["/((?!api|next|_next/static|_next/image|.png).*)"],
 };
 
