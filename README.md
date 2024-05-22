@@ -1,31 +1,56 @@
-# nextjs-laravel
+# nextjs-laravel-auth
 
-hostに以下のように設定
+## 初期設定
+`/etc/hosts`に以下のように設定
 
 ```
 127.0.0.1       web.test.local
 127.0.0.1       next.test.local
 ```
 
-・Laravelのページ  
+コンテナの立ち上げ
+```
+docker compose up -d
+```
+
+## 機能
+
+- Laravelのページ  
 https://web.test.local/
 
 
-・Next.jsのページ  
-https://web.test.local/login-next
+- Next.jsのページ  
+https://web.test.local/next
 
 のように、パスによってLaravelのページとNext.jsのページを出し分けます。
 
-ルーティングの設定はこちら  
-https://github.com/aokuyama/nextjs-laravel/blob/main/docker/proxy/web.test.local
+#### ルーティングの設定はこちら  
+https://github.com/aokuyama/nextjs-laravel-auth/blob/main/docker/proxy/web.test.local
 
-https://web.test.local/login-next  
-からログインするとLaravelのセッションとAuth.jsのセッションが同時に作られ、
-ログイン状態でを維持したままLaravelとNextのページを行き来できます
+### 認証の仕様詳細
+Next.jsかつログイン状態でしかアクセスできないページに遷移すると、  
+以下のような挙動になります
 
+##### Laravelセッションある & Authjsのセッションある
+- 何も起きない（そのままページアクセスできる）
 
-ログイン状態でのみアクセスできるLaravelのページ  
-https://web.test.local/home
+##### Laravelセッションある & Authjsのセッションない
+- Next.jsのログイン画面へリダイレクト
+  - emailやpasswordは入れず続行ボタンを押すのみ
+    - 続行ボタンを押したら元の画面にリダイレクトされる
+  - LaravelのセッションをもとにAuthjsのセッションが作成される
 
-ログイン状態でのみアクセスできるNextのページ  
+##### Laravelセッションない & Nextのセッションある
+- Authjsのセッション破棄し、Laravelのログイン画面へリダイレクト
+  - あくまでLaravelのセッションをベースとするため
+
+##### Laravelセッションない & Nextのセッションない
+- Laravelのログイン画面へリダイレクト
+
+#### 参考
+
+- ゲストでもアクセスできるNext.jsのページ  
+https://web.test.local/next
+
+- ログイン状態でのみアクセスできるNextのページ  
 https://web.test.local/dashboard
