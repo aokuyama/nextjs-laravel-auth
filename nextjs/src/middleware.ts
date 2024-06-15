@@ -2,17 +2,23 @@ import { checkSession } from "./shared/laravel/api/checkSession";
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 
+const loginPathBackend = "/login";
+const loginPath = "/login-next";
+
 export default auth(async (request) => {
-  if (!(await checkLaravelSession())) {
-    const url = new URL("/login", request.nextUrl);
+  const isLoggedInBackend = await checkLaravelSession();
+  const isLogged = request.auth;
+
+  if (!isLoggedInBackend) {
+    const url = new URL(loginPathBackend, request.nextUrl);
     url.searchParams.append("callbackUrl", request.nextUrl.pathname);
     return NextResponse.redirect(url);
   }
-  if (request.nextUrl.pathname.startsWith("/login-next")) {
+  if (request.nextUrl.pathname.startsWith(loginPath)) {
     return;
   }
-  if (!request.auth) {
-    const url = new URL("/login-next", request.nextUrl);
+  if (!isLogged) {
+    const url = new URL(loginPath, request.nextUrl);
     url.searchParams.append("callbackUrl", request.nextUrl.pathname);
     return NextResponse.redirect(url);
   }
