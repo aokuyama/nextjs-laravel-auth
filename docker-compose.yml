@@ -82,6 +82,7 @@ services:
       CERT_NAME: default
       AUTH_SECRET: some-secret
       AUTH_URL: https://web.test.local/login-next
+      ALLOWED_IPS: ${ALLOWED_IPS:-192.168.65.1/16}
     working_dir: /app/nextjs
     tty: true
     depends_on:
